@@ -16,7 +16,6 @@ public class AccountService {
     AccountRepository accountRepository;
 
     public List<AccountEntity> getAccount() {
-        System.out.println("あa");
         return accountRepository.findAll();
     }
 }

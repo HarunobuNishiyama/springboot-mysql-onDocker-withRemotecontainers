@@ -4,10 +4,10 @@ services:
   mysql:
     build: ./mysql
     container_name: mysql
-    env_file: # 環境変数
+    env_file:
       - ./mysql/db.env # DB接続用MySQL関連
     volumes:
-      - ./mysql/data:/var/lib/mysql # データの永続化
+      - ./mysql/data:/var/lib/mysql # 実データの永続化
       - ./mysql/log:/var/log/mysql # logの永続化
     ports:
       - 3306:3306
@@ -16,30 +16,30 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: dbclient
     environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOST=mysql
-      - PMA_USER=dev_usr
-      - PMA_PASSWORD=dev_usr_pass
+      - PMA_ARBITRARY=1 # 任意のサーバーへの接続を許可
+      - PMA_HOST=mysql # 接続先ホスト名　ここではdbサーバーのコンテナ名を指定
+      - PMA_USER=dev_usr # MySQLの設定と合わせておく
+      - PMA_PASSWORD=dev_usr_pass # MySQLの設定と合わせておく
     links:
       - mysql
     ports:
       - 4200:80
     volumes:
       - ./dbclient/sessions:/sessions
-    depends_on: # 起動する順番
+    depends_on:
       - mysql # 「mysql」の後で起動
 
-  java: # Spring Bootのコンテナ
-    build: ./java # Dockerファイルのパス
+  java:
+    image: openjdk:15
     container_name: java
-    env_file: # 環境変数
-      - ./mysql/db.env # DB接続用MySQL関連
+    env_file:
+      - ./mysql/db.env # DB接続用
     tty: true
     working_dir: /app
-    volumes: # 永続化
+    volumes:
       - ../spring_prj:/app # Spring Bootのプロジェクト
     ports: 
-      - 8080:8080
+      - 8080:8080 # 通常実行
       - 5050:5050 # デバッグ用
-    depends_on: # 起動する順番
+    depends_on:
       - mysql # 「mysql」の後で起動
