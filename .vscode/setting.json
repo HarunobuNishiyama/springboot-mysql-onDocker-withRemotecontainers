@@ -1,0 +1,14 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "extensions": {
+        "recommendations": [
+            "ms-vscode-remote.remote-containers",
+            "ms-azuretools.vscode-docker",
+            "jakebathman.mysql-syntax"
+        ]
+    }
+}

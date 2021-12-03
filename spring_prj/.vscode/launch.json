@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "java (Attach)",
+            "request": "attach",
+            "hostName": "java",
+            "port": 5050
+        }
+    ]
+}
